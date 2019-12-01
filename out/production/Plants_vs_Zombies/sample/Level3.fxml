@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gameScreen" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Level3">
+<AnchorPane fx:id="gameScreen" prefHeight="650.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Level3">
     <children>
         <ImageView fitHeight="650.0" fitWidth="1300.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -66,13 +67,9 @@
                 <Font name="Arial Black" size="26.0" />
             </font>
         </Label>
-        <Button layoutX="256.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="43.0" prefWidth="60.0">
+        <Button fx:id="bonusBtn" layoutX="256.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0">
             <graphic>
-                <ImageView fitHeight="42.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../resources/img/shovel_ss.PNG" />
-                    </image>
-                </ImageView>
+                <Label alignment="CENTER" prefHeight="21.0" prefWidth="84.0" text="BONUS : 50" />
             </graphic>
         </Button>
         <ImageView fitHeight="55.0" fitWidth="257.0" layoutX="852.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">

@@ -44,6 +44,8 @@ public class Level2 implements Initializable
     private Button exitBtn;
     @FXML
     private Button resumeBtn;
+    @FXML
+    private Button bonusBtn;
 
     private CurrentGame game;
     private boolean zombiesEnded;
@@ -54,6 +56,7 @@ public class Level2 implements Initializable
     private Timeline addZombieTimeline;
     private Timeline checkPlantsTimeline;
     private Timeline winnerTimeline;
+    private Timeline bonusTimeline;
 
     private ArrayList<ImageView> allPeas;
 
@@ -263,15 +266,19 @@ public class Level2 implements Initializable
         KeyFrame kf = new KeyFrame(Duration.millis(20) , event ->
         {
             int curSuns = game.getSuns();
-            if(curSuns >= 50)
+            if(curSuns >= 50) {
                 sunflowerBtn.setDisable(false);
+                bonusBtn.setDisable(false);
+            }
             if(curSuns >= 100)
                 peashooterBtn.setDisable(false);
 
             if(curSuns < 100)
                 peashooterBtn.setDisable(true);
-            if(curSuns < 50)
+            if(curSuns < 50) {
                 sunflowerBtn.setDisable(true);
+                bonusBtn.setDisable(true);
+            }
         });
         checkPlantsTimeline = new Timeline(kf);
         checkPlantsTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -545,6 +552,30 @@ public class Level2 implements Initializable
         loadLevel3();
     }
 
+    private void bonus()
+    {
+        game.setSuns(game.getSuns() - 50);
+        sunLabel.setText(((Integer)game.getSuns()).toString());
+
+        KeyFrame kf = new KeyFrame(Duration.millis(50) , event ->
+        {
+            for (Zombies z : game.getZombies_list())
+            {
+                z.zombieTimeline.pause();
+            }
+        });
+        bonusTimeline = new Timeline(kf);
+        bonusTimeline.setCycleCount(100);
+        bonusTimeline.setOnFinished(event ->
+        {
+            for (Zombies z : game.getZombies_list())
+            {
+                z.zombieTimeline.play();
+            }
+        });
+        bonusTimeline.play();
+    }
+
     @Override
     public void initialize(URL url , ResourceBundle rb)
     {
@@ -560,6 +591,11 @@ public class Level2 implements Initializable
         startZombies();
         startSuns();
         checkPlants();
+
+        bonusBtn.setOnMouseClicked(event ->
+        {
+            bonus();
+        });
 
         walnutBtn.setDisable(true);
         cherrybombBtn.setDisable(true);

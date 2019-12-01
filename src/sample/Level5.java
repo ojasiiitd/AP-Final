@@ -46,6 +46,8 @@ public class Level5 implements Initializable
     private Button exitBtn;
     @FXML
     private Button resumeBtn;
+    @FXML
+    private Button bonusBtn;
 
     private CurrentGame game;
     private boolean zombiesEnded;
@@ -56,6 +58,7 @@ public class Level5 implements Initializable
     private Timeline addZombieTimeline;
     private Timeline checkPlantsTimeline;
     private Timeline winnerTimeline;
+    private Timeline bonusTimeline;
 
     private ArrayList<ImageView> allPeas;
 
@@ -268,6 +271,7 @@ public class Level5 implements Initializable
             if(curSuns >= 50) {
                 sunflowerBtn.setDisable(false);
                 walnutBtn.setDisable(false);
+                bonusBtn.setDisable(false);
             }
             if(curSuns >= 100)
                 peashooterBtn.setDisable(false);
@@ -281,6 +285,7 @@ public class Level5 implements Initializable
             if(curSuns < 50) {
                 sunflowerBtn.setDisable(true);
                 walnutBtn.setDisable(true);
+                bonusBtn.setDisable(true);
             }
         });
         checkPlantsTimeline = new Timeline(kf);
@@ -465,7 +470,7 @@ public class Level5 implements Initializable
     {
         Image zombie1 = new Image(getClass().getResource("../resources/img/BucketZombie.gif").toExternalForm());
         Image zombie2 = new Image(getClass().getResource("../resources/img/BucketZombie.gif").toExternalForm());
-        Image zombie3 = new Image(getClass().getResource("../resources/img/zombie_normal.gif").toExternalForm());
+        Image zombie3 = new Image(getClass().getResource("../resources/img/zombie_football.gif").toExternalForm());
         Image zombieImg[] = {zombie1 , zombie2 , zombie3};
 
         int yCoors[] = {80 , 180 , 280 , 380 , 480};
@@ -560,6 +565,30 @@ public class Level5 implements Initializable
         winnerTimeline.play();
     }
 
+    private void bonus()
+    {
+        game.setSuns(game.getSuns() - 50);
+        sunLabel.setText(((Integer)game.getSuns()).toString());
+
+        KeyFrame kf = new KeyFrame(Duration.millis(50) , event ->
+        {
+            for (Zombies z : game.getZombies_list())
+            {
+                z.zombieTimeline.pause();
+            }
+        });
+        bonusTimeline = new Timeline(kf);
+        bonusTimeline.setCycleCount(100);
+        bonusTimeline.setOnFinished(event ->
+        {
+            for (Zombies z : game.getZombies_list())
+            {
+                z.zombieTimeline.play();
+            }
+        });
+        bonusTimeline.play();
+    }
+
     @Override
     public void initialize(URL url , ResourceBundle rb)
     {
@@ -575,6 +604,11 @@ public class Level5 implements Initializable
         startZombies();
         startSuns();
         checkPlants();
+
+        bonusBtn.setOnMouseClicked(event ->
+        {
+            bonus();
+        });
     }
 
     private static int getRandomNumberInRange(int min, int max)
