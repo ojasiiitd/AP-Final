@@ -370,6 +370,12 @@ public class Level5 implements Initializable
             sunflowerCycle(s);
         }
         catch (Exception ex) {}
+
+        try
+        {
+            CherryBomb c = (CherryBomb) curPlant;
+        }
+        catch (Exception ex) {}
     }
 
     private void moveZombie(Zombies z)
@@ -424,6 +430,11 @@ public class Level5 implements Initializable
                 {
                     System.out.println("LAWNMOWERRRR");
                     moveLawnmoverover((LawnMover) plantHit);
+                }
+
+                else if(plantHit.getClass() == new CherryBomb(new ImageView()).getClass())
+                {
+                    System.out.println("CHERRYBOMB");
                 }
 
                 else

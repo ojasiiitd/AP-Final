@@ -368,6 +368,12 @@ public class Level4 implements Initializable
             sunflowerCycle(s);
         }
         catch (Exception ex) {}
+
+        try
+        {
+            CherryBomb c = (CherryBomb) curPlant;
+        }
+        catch (Exception ex) {}
     }
 
     private void moveZombie(Zombies z)
@@ -420,8 +426,12 @@ public class Level4 implements Initializable
             {
                 if(plantHit.getClass() == new LawnMover(new ImageView()).getClass())
                 {
-                    System.out.println("LAWNMOWERRRR");
                     moveLawnmoverover((LawnMover) plantHit);
+                }
+
+                else if(plantHit.getClass() == new CherryBomb(new ImageView()).getClass())
+                {
+                    System.out.println("CHERRYBOMB");
                 }
 
                 else
@@ -431,7 +441,8 @@ public class Level4 implements Initializable
                     System.out.println("PLANT HIT");
 
                     plantHit.setDefenceValue(plantHit.getDefenceValue() - z.getAttack_value());
-                    if (plantHit.getDefenceValue() <= 0) {
+                    if (plantHit.getDefenceValue() <= 0)
+                    {
                         System.out.println("KILLED");
                         z.hittingPlant = false;
                         plantHit.plantActionTimeline.stop();
@@ -525,7 +536,6 @@ public class Level4 implements Initializable
                     game.getZombies_list().remove(i);
                 }
             }
-//
         });
         lm.plantActionTimeline = new Timeline(kf);
         lm.plantActionTimeline.setCycleCount(Timeline.INDEFINITE);
